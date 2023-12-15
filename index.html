@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 20px;
+			box-shadow: 0 0 10px rgba(1, 1, 1, 2.9);
+            text-align: center;
+        }
+		
+		#title {
+            color: red;
+        }
+	
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 3px solid #ccc;
+            border-radius: 5px;
+        }
+		
+		
+		
+        #loginBtn {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 40px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #warning {
+            color: red;
+            margin-top: 30px;
+        }
+
+        .calculator-container {
+            display: none;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 4.9);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        #calculatorBtn {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .result-container {
+            margin-top: 30px;
+        }
+
+        .red-circle {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .green-circle {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: green;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div>Premium Pro+ Color Hack Win Rate 75% - 90%</div>
+    <div><br>
+        <label for="username"><b>User Name:</b></label> <br>
+        <input type="text" id="username" name="username" placeholder="Username" > <br>
+    </div><br>
+    <div>
+        <label for="password"><b>Password:</b></label><br>
+        <input type="password" id="password" name="password" placeholder="Password" >
+    </div><br>
+    <button id="loginBtn" onclick="login()">Login</button>
+    <div id="warning"></div>
+</div>
+
+<div class="calculator-container">
+    <div><b>Color Win Rate 70 %  // Number Win Rate 30 %</b></div><br> 
+	<div>
+        <label for="period">Period:</label><br>
+        <input type="text" id="period" name="period">
+    </div><br>
+    <div>
+        <label for="price">Price Last Number:</label><br>
+        <input type="text" id="price" name="price">
+    </div><br>
+    <div>
+        <label for="lastColor">Last Color:</label><br>
+        <select id="lastColor" name="lastColor">
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+        </select>
+    </div><br>
+    <button id="calculatorBtn" onclick="calculate()">Calculator</button>
+    <div class="result-container" id="lastResult"></div>
+</div>
+
+<script>
+    function login() {
+        var password = document.getElementById("password").value;
+        var warning = document.getElementById("warning");
+
+        if (password !== "PremiumPro#00+#00+" && password !== "PremiumPro#0++#0++" && password !== "PremiumPro#+++#+++") {
+            warning.textContent = "Wrong Password";
+            warning.style.color = "red";
+        } else {
+            // Clear the screen and show the calculator container
+            document.querySelector('.login-container').style.display = 'none';
+            document.querySelector('.calculator-container').style.display = 'block';
+        }
+    }
+
+    function calculate() {
+        var period = parseInt(document.getElementById("period").value);
+        var price = parseInt(document.getElementById("price").value);
+        var lastColor = document.getElementById("lastColor").value;
+
+        var step1Result = (period % 10) + Math.floor(period / 10);
+        var step2Result = step1Result + price;
+        var step3Result = (step2Result >= 10) ? (Math.floor(step2Result / 10) + (step2Result % 10)) : step2Result;
+        var step4Result = (lastColor === "red") ? (step3Result + 1) : (step3Result - 1);
+        var step5Result = (step4Result >= 10) ? (Math.floor(step4Result / 10) + (step4Result % 10)) : step4Result;
+
+        var lastResultContainer = document.getElementById("lastResult");
+        lastResultContainer.innerHTML = "Last Result: " + step5Result;
+
+        // Determine color and display accordingly
+        var colorCircle = (step5Result % 2 === 0) ? '<span class="red-circle"></span>' : '<span class="green-circle"></span>';
+        lastResultContainer.innerHTML += colorCircle ;
+    }
+</script>
+
+</body>
+</html>
